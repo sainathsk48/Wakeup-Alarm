@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Wakeup Alarm</string>
+    <string name="title_activity_main">Wakeup Alarm</string>
+    <string name="package_name">com.wakeupalarm.app</string>
+    <string name="custom_url_scheme">com.wakeupalarm.app</string>
+</resources>

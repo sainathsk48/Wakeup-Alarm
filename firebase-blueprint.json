@@ -1,0 +1,43 @@
+{
+  "entities": {
+    "Alarm": {
+      "title": "Alarm",
+      "description": "User set alarm configuration",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "time": { "type": "string" },
+        "days": { "type": "array", "items": { "type": "integer" } },
+        "enabled": { "type": "boolean" },
+        "label": { "type": "string" },
+        "difficulty": { "type": "string", "enum": ["easy", "medium", "hard"] },
+        "challengeType": { "type": "string", "enum": ["math", "memory", "coding", "camera", "random"] }
+      },
+      "required": ["id", "userId", "time", "days", "enabled"]
+    },
+    "UserStats": {
+      "title": "UserStats",
+      "description": "Tracking user progress",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "totalAlarmsSet": { "type": "integer" },
+        "alarmsCompleted": { "type": "integer" },
+        "streak": { "type": "integer" },
+        "lastCompletedDate": { "type": "string" }
+      },
+      "required": ["userId", "totalAlarmsSet", "alarmsCompleted", "streak"]
+    }
+  },
+  "firestore": {
+    "/alarms/{alarmId}": {
+      "schema": "Alarm",
+      "description": "Collection of user alarms"
+    },
+    "/stats/{userId}": {
+      "schema": "UserStats",
+      "description": "User statistics"
+    }
+  }
+}

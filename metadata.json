@@ -1,0 +1,8 @@
+{
+  "name": "Wakeup Alarm",
+  "description": "A productivity-focused alarm app that requires solving puzzles (Math, Memory, Coding, Camera) to dismiss alarms.",
+  "requestFramePermissions": [
+    "camera"
+  ],
+  "majorCapabilities": []
+}

@@ -1,0 +1,75 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // ===============================================================
+    // Assumed Data Model
+    // ===============================================================
+    //
+    // Collection: alarms
+    // Document ID: {alarmId}
+    // Fields:
+    //   - id: string (required)
+    //   - userId: string (required)
+    //   - time: string (required, format: HH:mm)
+    //   - days: list of integers (required, 0-6)
+    //   - enabled: boolean (required)
+    //   - label: string (optional)
+    //   - difficulty: string (required, enum: easy, medium, hard)
+    //   - challengeType: string (required, enum: math, memory, coding, camera, random)
+    //
+    // Collection: stats
+    // Document ID: {userId}
+    // Fields:
+    //   - userId: string (required)
+    //   - totalAlarmsSet: number (required)
+    //   - alarmsCompleted: number (required)
+    //   - streak: number (required)
+    //   - lastCompletedDate: string (optional, format: YYYY-MM-DD)
+    //
+    // ===============================================================
+
+    // Helper Functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    function isDocOwner() {
+      return isAuthenticated() && request.auth.uid == resource.data.userId;
+    }
+
+    function isValidAlarm(data) {
+      return data.id is string &&
+             data.userId == request.auth.uid &&
+             data.time is string &&
+             data.days is list &&
+             data.enabled is bool &&
+             data.difficulty in ['easy', 'medium', 'hard'] &&
+             data.challengeType in ['math', 'memory', 'coding', 'camera', 'random'];
+    }
+
+    function isValidStats(data) {
+      return data.userId == request.auth.uid &&
+             data.totalAlarmsSet is number &&
+             data.alarmsCompleted is number &&
+             data.streak is number;
+    }
+
+    // Rules
+    match /alarms/{alarmId} {
+      allow read: if isDocOwner();
+      allow create: if isAuthenticated() && isValidAlarm(request.resource.data);
+      allow update: if isDocOwner() && isValidAlarm(request.resource.data);
+      allow delete: if isDocOwner();
+    }
+
+    match /stats/{userId} {
+      allow read: if isOwner(userId);
+      allow create: if isOwner(userId) && isValidStats(request.resource.data);
+      allow update: if isOwner(userId) && isValidStats(request.resource.data);
+    }
+  }
+}
