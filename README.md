@@ -7,6 +7,7 @@ A powerful, AI-enhanced alarm clock for Android and Web designed to make waking 
 
 ## 🚀 Features
 
+
 - **Object Detection Challenges**: Turn off your alarm by showing your camera a specific object (e.g., a "cup", "bottle", or "laptop") powered by TensorFlow.js (COCO-SSD).
 - **Math Puzzles**: Engage your brain immediately with customizable math challenges.
 - **Native Android Service**: Robust alarm system that works in the background, during Doze mode, and even after device reboots using native Android foreground services.
