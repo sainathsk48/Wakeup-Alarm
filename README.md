@@ -3,7 +3,7 @@
 
 A powerful, AI-enhanced alarm clock for Android and Web designed to make waking up inevitable. Built with **React**, **Capacitor**, and **TensorFlow.js**, it challenges you to complete tasks—like object detection or math puzzles—before the alarm stops.
 
-![Banner](https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6)
+
 
 ## 🚀 Features
 
